@@ -1,0 +1,21 @@
+name: Update Investment Data xiaox
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 * * * *' # Runs at 30 minutes past the hour, every hour
+
+jobs:
+  update-data:
+    runs-on: self-hosted
+
+    steps:
+    - name: Run daily update script in container
+      uses: addnab/docker-run-action@v3
+      with:
+        registry: docker.io
+        image: chenditc/investment_data:latest
+        options: --pull always --name daily_dolt_update -v dolt_update:/dolt --rm
+        run: |
+          # Execute the daily update script
+          bash -c "TUSHARE=${{ secrets.TUSHARE }} bash daily_update.sh"
