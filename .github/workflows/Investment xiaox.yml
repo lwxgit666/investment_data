@@ -13,9 +13,10 @@ jobs:
     - name: Run daily update script in container
       uses: addnab/docker-run-action@v3
       with:
+        #docker run -v C:/Users/xiaox/.qlib/docker_data:/output -it  chenditc/investment_data
         registry: docker.io
         image: chenditc/investment_data:latest
-        options: --pull always --name daily_dolt_update -v dolt_update:/dolt --rm
+        #options: --pull always --name daily_dolt_update -v dolt_update:/dolt --rm
         run: |
           # Execute the daily update script
-          bash -c "TUSHARE=${{ secrets.TUSHARE }} bash daily_update.sh"
+          bash -c "TUSHARE=${{ secrets.TUSHARE }} bash dump_qlib_bin.sh"
